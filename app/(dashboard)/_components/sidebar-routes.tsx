@@ -20,8 +20,14 @@ const SidebarRoutes = () => {
 
   return (
     <div className='flex flex-col'>
-      <p>Sidebar Routes</p>
-      <p>Sidebar Routes</p>
+      {routes.map((route) => (
+        <SidebarRoute
+          key={route.href}
+          icon={route.icon}
+          label={route.label}
+          href={route.href}
+        />
+      ))}
     </div>
   );
 };
