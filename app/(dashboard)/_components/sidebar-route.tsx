@@ -8,7 +8,7 @@ interface SidebarRouteProps {
   href: string;
 }
 
-const SidebarRoute = ({ icon, label, href }: SidebarRouteProps) => {
+const SidebarRoute = ({ icon: Icon, label, href }: SidebarRouteProps) => {
   return <div>Sidebar route</div>;
 };
 
