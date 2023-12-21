@@ -35,6 +35,11 @@ const SidebarRoute = ({ icon: Icon, label, href }: SidebarRouteProps) => {
         />
         {label}
       </div>
+      <div
+        className={cn(
+          'ml-auto h-full border-2 border-sky-700 opacity-0 transition-all',
+          isActive && 'opacity-100',
+        )}></div>
     </button>
   );
 };
