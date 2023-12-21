@@ -1,5 +1,12 @@
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+
 const MobileSidebar = () => {
-  return <div>This is Mobile Sidebar</div>;
+  return (
+    <Sheet>
+      <SheetTrigger></SheetTrigger>
+      <SheetContent></SheetContent>
+    </Sheet>
+  );
 };
 
 export default MobileSidebar;
