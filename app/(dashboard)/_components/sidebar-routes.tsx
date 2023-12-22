@@ -2,8 +2,9 @@
 
 import { BarChart, Compass, Layout, List } from 'lucide-react';
 import SidebarRoute from './sidebar-route';
+import { usePathname } from 'next/navigation';
 
-const GUEST_ROUTES = [
+const HOME_ROUTES = [
   {
     icon: Layout,
     label: 'Dashboard',
@@ -30,7 +31,10 @@ const TEACHER_ROUTES = [
 ];
 
 const SidebarRoutes = () => {
-  const routes = GUEST_ROUTES;
+  const pathname = usePathname();
+  const isTeacherPage = pathname.startsWith('/teacher');
+
+  const routes = isTeacherPage ? TEACHER_ROUTES : HOME_ROUTES;
 
   return (
     <div className='flex flex-col'>
