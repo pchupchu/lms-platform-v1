@@ -6,9 +6,15 @@ const FormWithoutReactHookFormPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
+    //отправление значений формы на сервер
+
+    setIsSubmitting(false);
   };
 
   return (
