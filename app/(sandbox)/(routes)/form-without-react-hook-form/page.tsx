@@ -1,13 +1,31 @@
+'use client';
+
+import { useState } from 'react';
+
 const FormWithoutReactHookFormPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   return (
     <form className='flex flex-col gap-y-2'>
-      <input type='email' placeholder='Email' className='rounded px-4 py-2' />
       <input
+        type='email'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder='Email'
+        className='rounded px-4 py-2'
+      />
+      <input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         type='password'
         placeholder='Password'
         className='rounded px-4 py-2'
       />
       <input
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
         type='password'
         placeholder='Confirm password'
         className='rounded px-4 py-2'
