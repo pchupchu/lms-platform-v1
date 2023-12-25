@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
 const FormWithReactHookFormPage = () => {
   const {
@@ -12,10 +12,17 @@ const FormWithReactHookFormPage = () => {
     getValues,
   } = useForm();
 
-  console.log(register('password'));
+  const onSubmit = async (data: FieldValues) => {
+    const result = await new Promise((resolve, reject) =>
+      setTimeout(() => {
+        resolve('Успешный результат');
+      }, 2000),
+    );
+    console.log(result);
+  };
 
   return (
-    <form className='flex flex-col gap-y-2'>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-2'>
       <input
         {...register('email', {
           required: 'Email is required',
@@ -39,10 +46,6 @@ const FormWithReactHookFormPage = () => {
       <input
         {...register('confirmPassword', {
           required: 'Confirm password is required',
-          minLength: {
-            value: 6,
-            message: 'Password must be at least 6 characters',
-          },
         })}
         type='password'
         placeholder='Confirm password'
