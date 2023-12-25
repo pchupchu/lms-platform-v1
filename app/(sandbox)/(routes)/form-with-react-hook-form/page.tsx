@@ -19,6 +19,7 @@ const FormWithReactHookFormPage = () => {
       }, 2000),
     );
     console.log(result);
+    reset();
   };
 
   return (
