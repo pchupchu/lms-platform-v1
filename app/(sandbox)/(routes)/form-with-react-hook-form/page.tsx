@@ -52,6 +52,7 @@ const FormWithReactHookFormPage = () => {
         className='rounded px-4 py-2'
       />
       <button
+        disabled={isSubmitting || !isValid}
         type='submit'
         className='rounded bg-green-500 py-2 text-lg font-medium text-white disabled:bg-gray-500'>
         Submit
