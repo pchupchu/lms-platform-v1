@@ -7,10 +7,17 @@ const FormWithoutReactHookFormPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setErrors] = useState<string[]>([]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
+
+    if (password !== confirmPassword) {
+      setErrors(['Passwords do not match']);
+      setIsSubmitting(false);
+      return;
+    }
 
     //отправление значений формы на сервер
     const result = await new Promise((resolve, reject) =>
