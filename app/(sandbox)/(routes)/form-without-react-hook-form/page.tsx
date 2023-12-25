@@ -25,9 +25,11 @@ const FormWithoutReactHookFormPage = () => {
         resolve('Успешный результат');
       }, 2000),
     );
-
     console.log(result);
 
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
     setIsSubmitting(false);
   };
 
