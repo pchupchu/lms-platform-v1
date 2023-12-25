@@ -7,7 +7,7 @@ const FormWithoutReactHookFormPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,6 +33,18 @@ const FormWithoutReactHookFormPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-y-2'>
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((error) => (
+            <li
+              key={error}
+              className='px-4py-2 rounded bg-red-100 text-red-500'>
+              {error}
+            </li>
+          ))}
+        </ul>
+      )}
+
       <input
         type='email'
         value={email}
