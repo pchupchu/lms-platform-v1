@@ -2,6 +2,13 @@
 
 import { FormEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const signUpSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  confirmPassword: z.string(),
+});
 
 const FormWithReactHookFormPageAndZod = () => {
   const {
@@ -28,13 +35,7 @@ const FormWithReactHookFormPageAndZod = () => {
       onSubmit={handleSubmit(onSubmit)}
       className='flex flex-col gap-y-2'>
       <input
-        {...register('email', {
-          required: 'Email is required',
-          pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'Incorrect email',
-          },
-        })}
+        {...register('email')}
         type='email'
         placeholder='Email'
         className='rounded px-4 py-2'
@@ -43,13 +44,7 @@ const FormWithReactHookFormPageAndZod = () => {
         <p className='text-red-500'>{`${errors.email.message}`}</p>
       )}
       <input
-        {...register('password', {
-          required: 'Password is required',
-          minLength: {
-            value: 6,
-            message: 'Password must be at least 6 characters',
-          },
-        })}
+        {...register('password')}
         type='password'
         placeholder='Password'
         className='rounded px-4 py-2'
@@ -58,11 +53,7 @@ const FormWithReactHookFormPageAndZod = () => {
         <p className='text-red-500'>{`${errors.password.message}`}</p>
       )}
       <input
-        {...register('confirmPassword', {
-          required: 'Confirm password is required',
-          validate: (value) =>
-            value === getValues('password') || 'Passwords must match',
-        })}
+        {...register('confirmPassword')}
         type='password'
         placeholder='Confirm password'
         className='rounded px-4 py-2'
