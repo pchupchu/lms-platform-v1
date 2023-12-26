@@ -1,5 +1,6 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormEvent, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,8 +22,9 @@ const FormWithReactHookFormPageAndZod = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(signUpSchema),
+  });
 
   const onSubmit = async (data: FieldValues) => {
     const result = await new Promise((resolve, reject) =>
