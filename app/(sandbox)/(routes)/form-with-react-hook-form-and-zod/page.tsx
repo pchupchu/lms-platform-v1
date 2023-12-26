@@ -16,17 +16,19 @@ const signUpSchema = z
     path: ['confirmPassword'],
   });
 
+type SignUpSchemaType = z.infer<typeof signUpSchema>;
+
 const FormWithReactHookFormPageAndZod = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm({
+  } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: SignUpSchemaType) => {
     const result = await new Promise((resolve, reject) =>
       setTimeout(() => {
         resolve('Success');
