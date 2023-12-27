@@ -30,12 +30,15 @@ type FormSchemaType = z.infer<typeof formSchema>;
 const FormWithReactHookFormAndShadcn = () => {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
+    mode: 'onBlur',
     defaultValues: {
       email: '',
       password: '',
       confirmPassword: '',
     },
   });
+
+  const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: FormSchemaType) => {
     const result = await new Promise((resolve, reject) =>
@@ -44,6 +47,7 @@ const FormWithReactHookFormAndShadcn = () => {
       }, 2000),
     );
     console.log(result);
+    form.reset();
   };
 
   return (
@@ -92,7 +96,9 @@ const FormWithReactHookFormAndShadcn = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Submit</Button>
+        <Button type='submit' disabled={isSubmitting || !isValid}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
