@@ -10,8 +10,10 @@ const formSchema = z.object({
   confirmPassword: z.string(),
 });
 
+type FormSchemaType = z.infer<typeof formSchema>;
+
 const FormWithReactHookFormAndShadcn = () => {
-  const form = useForm({
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
