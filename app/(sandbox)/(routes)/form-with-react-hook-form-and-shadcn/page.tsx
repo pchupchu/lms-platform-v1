@@ -22,6 +22,15 @@ const FormWithReactHookFormAndShadcn = () => {
     },
   });
 
+  const onSubmit = async (values: FormSchemaType) => {
+    const result = await new Promise((resolve, reject) =>
+      setTimeout(() => {
+        resolve('Success');
+      }, 2000),
+    );
+    console.log(result);
+  };
+
   return <div>This is a new form</div>;
 };
 
