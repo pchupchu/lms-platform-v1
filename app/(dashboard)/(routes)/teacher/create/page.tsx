@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Form } from '@/components/ui/form';
 
 const formSchema = z.object({
   title: z.string().trim().min(1, 'Title is required'),
@@ -33,6 +34,11 @@ const CreatePage = () => {
           How would you like to name your course? Don&apos;t worry, you can
           change this later
         </p>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='mt-8 space-y-8'></form>
+        </Form>
       </div>
     </div>
   );
