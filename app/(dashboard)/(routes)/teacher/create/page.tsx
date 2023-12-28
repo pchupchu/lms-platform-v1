@@ -21,6 +21,10 @@ const CreatePage = () => {
 
   const { isValid, isSubmitting } = form.formState;
 
+  const onSubmit = (values: FormSchemaType) => {
+    console.log(values);
+  };
+
   return <div>This is a Create page</div>;
 };
 
