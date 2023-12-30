@@ -60,7 +60,7 @@ const FormWithReactHookFormAndShadcn = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='email' {...field} />
+                <Input type='email' placeholder='email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
