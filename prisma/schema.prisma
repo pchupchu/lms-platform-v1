@@ -29,6 +29,8 @@ model Attachment {
   updatedAt DateTime @updatedAt
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
 }
 
 model Category {
