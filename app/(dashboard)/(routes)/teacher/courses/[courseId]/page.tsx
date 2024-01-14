@@ -1,5 +1,13 @@
-const CourseIdPage = () => {
-  return <div>This is a courseId page</div>;
+interface CourseIdProps {
+  params: {
+    courseId: string;
+  };
+}
+
+const CourseIdPage = ({ params }: CourseIdProps) => {
+  const { courseId } = params;
+
+  return <div>{courseId}</div>;
 };
 
 export default CourseIdPage;
