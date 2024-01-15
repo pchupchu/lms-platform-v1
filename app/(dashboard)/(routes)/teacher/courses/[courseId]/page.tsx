@@ -26,7 +26,13 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
     course.categoryId,
   ];
 
-  return <div>{courseId}</div>;
+  const totalFields = requredFields.length;
+  const completedFields = requredFields.filter((requredField) =>
+    Boolean(requredField),
+  ).length;
+  const completionText = `(${completedFields}/${totalFields})`;
+
+  return <div>{completionText}</div>;
 };
 
 export default CourseIdPage;
