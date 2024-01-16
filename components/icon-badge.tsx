@@ -20,8 +20,12 @@ const backgroundVariants = cva(
 
 type BackgroundVariantsProps = VariantProps<typeof backgroundVariants>;
 
-const IconBadge = () => {
-  return <div>XX</div>;
+interface IconBadgeProps extends BackgroundVariantsProps {
+  // icon: LucideIcon;
+}
+
+const IconBadge = ({ variant, size }: IconBadgeProps) => {
+  return <div className={backgroundVariants({ variant, size })}>XX</div>;
 };
 
 export default IconBadge;
