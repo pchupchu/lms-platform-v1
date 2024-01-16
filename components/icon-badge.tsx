@@ -18,6 +18,8 @@ const backgroundVariants = cva(
   },
 );
 
+type BackgroundVariantsProps = VariantProps<typeof backgroundVariants>;
+
 const IconBadge = () => {
   return <div>XX</div>;
 };
