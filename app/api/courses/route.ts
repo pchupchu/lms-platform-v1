@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const { title } = await request.json();
 
     /*
-    WARN: зачем эта проверка? 
+     Эта проверка нужна для того, чтобы не возникало ошибки в типизации при добавлении значений формы в базу данных
     */
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
