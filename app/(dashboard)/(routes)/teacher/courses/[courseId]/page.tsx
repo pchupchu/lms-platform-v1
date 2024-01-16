@@ -1,3 +1,4 @@
+import IconBadge from '@/components/icon-badge';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
@@ -46,6 +47,7 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
         {/* Section "Customize your course" starts */}
         <div>
           <div className='flex items-center gap-x-2'>
+            <IconBadge />
             <h2 className='text-xl'>Customize your course</h2>
           </div>
         </div>
