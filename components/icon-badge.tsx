@@ -36,11 +36,11 @@ type BackgroundVariantsProps = VariantProps<typeof backgroundVariants>;
 
 type IconVariantsProps = VariantProps<typeof iconVariants>;
 
-interface IconBadgeProps extends BackgroundVariantsProps {
-  // icon: LucideIcon;
+interface IconBadgeProps extends BackgroundVariantsProps, IconVariantsProps {
+  icon: LucideIcon;
 }
 
-const IconBadge = ({ variant, size }: IconBadgeProps) => {
+const IconBadge = ({ variant, size, icon: Icon }: IconBadgeProps) => {
   return <div className={backgroundVariants({ variant, size })}>XX</div>;
 };
 
