@@ -51,6 +51,7 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
             <IconBadge icon={LayoutDashboard} />
             <h2 className='text-xl'>Customize your course</h2>
           </div>
+          <TitleForm initialData={course} courseId={course.id} />
         </div>
 
         {/* Section "Customize your course" ends */}
