@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 ('use client');
 
@@ -13,9 +15,19 @@ const titleFormSchema = z.object({
   title: z.string().trim().min(1, 'Title is required'),
 });
 
-type TitleFormSchemaProps = z.infer<typeof titleFormSchema>;
+type TitleFormSchemaType = z.infer<typeof titleFormSchema>;
 
 const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+  const form = useForm<TitleFormSchemaType>({
+    mode: 'onBlur',
+    resolver: zodResolver(titleFormSchema),
+    defaultValues: {
+      title: initialData.title,
+    },
+  });
+
+  const { isValid, isSubmitting } = form.formState;
+
   return <div>This is a title form</div>;
 };
 
