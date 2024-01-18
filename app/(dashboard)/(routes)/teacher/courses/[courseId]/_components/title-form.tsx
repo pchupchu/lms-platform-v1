@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { PencilIcon } from 'lucide-react';
+import { useState } from 'react';
 
 interface TitleFormProps {
   initialData: {
@@ -34,6 +35,12 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     console.log(values);
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleIsEditing = () => {
+    setIsEditing((currentState) => !currentState);
+  };
+
   return (
     <div className='mt-6 rounded-md border bg-slate-100 p-4'>
       <div className='flex items-center justify-between font-medium'>
@@ -41,9 +48,15 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
         WARN: Почему заголовок не в текстовом теге
         */}
         Course Title
-        <Button variant={'ghost'}>
-          <PencilIcon className='mr-2 h-4 w-4' />
-          Edit
+        <Button variant={'ghost'} onClick={toggleIsEditing}>
+          {isEditing ? (
+            'Cancel'
+          ) : (
+            <>
+              <PencilIcon className='mr-2 h-4 w-4' />
+              Edit
+            </>
+          )}
         </Button>
       </div>
     </div>
