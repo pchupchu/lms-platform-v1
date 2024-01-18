@@ -1,8 +1,10 @@
+'use client';
+
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-
-('use client');
+import { Button } from '@/components/ui/button';
+import { PencilIcon } from 'lucide-react';
 
 interface TitleFormProps {
   initialData: {
@@ -32,7 +34,20 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     console.log(values);
   };
 
-  return <div>This is a title form</div>;
+  return (
+    <div className='mt-6 rounded-md border bg-slate-100 p-4'>
+      <div className='flex items-center justify-between font-medium'>
+        {/* 
+        WARN: Почему заголовок не в текстовом теге
+        */}
+        Course Title
+        <Button variant={'ghost'}>
+          <PencilIcon className='mr-2 h-4 w-4' />
+          Edit
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default TitleForm;
