@@ -13,6 +13,8 @@ const titleFormSchema = z.object({
   title: z.string().trim().min(1, 'Title is required'),
 });
 
+type TitleFormSchemaProps = z.infer<typeof titleFormSchema>;
+
 const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   return <div>This is a title form</div>;
 };
