@@ -6,7 +6,14 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { PencilIcon } from 'lucide-react';
 import { useState } from 'react';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 interface TitleFormProps {
   initialData: {
@@ -69,7 +76,18 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
             <FormField
               control={form.control}
               name='title'
-              render={({ field }) => <FormItem></FormItem>}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='e.g. "Advanced web development"'
+                      disabled={isSubmitting}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </form>
         </Form>
