@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { PencilIcon } from 'lucide-react';
 import { useState } from 'react';
+import { Form } from '@/components/ui/form';
 
 interface TitleFormProps {
   initialData: {
@@ -60,6 +61,13 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
         </Button>
       </div>
       {!isEditing && <p className='mt-2 text-sm'>{initialData.title}</p>}
+      {isEditing && (
+        <Form {...form}>
+          <form
+            className='mt-4 space-y-4'
+            onSubmit={form.handleSubmit(onSubmit)}></form>
+        </Form>
+      )}
     </div>
   );
 };
