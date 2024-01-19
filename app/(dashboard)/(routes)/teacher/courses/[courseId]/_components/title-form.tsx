@@ -14,6 +14,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 interface TitleFormProps {
   initialData: {
@@ -29,6 +32,9 @@ const titleFormSchema = z.object({
 type TitleFormSchemaType = z.infer<typeof titleFormSchema>;
 
 const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const router = useRouter();
+
   const form = useForm<TitleFormSchemaType>({
     mode: 'onBlur',
     resolver: zodResolver(titleFormSchema),
@@ -39,14 +45,19 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
 
   const { isValid, isSubmitting } = form.formState;
 
-  const onSubmit = (values: TitleFormSchemaType) => {
-    console.log(values);
-  };
-
-  const [isEditing, setIsEditing] = useState(false);
-
   const toggleIsEditing = () => {
     setIsEditing((currentState) => !currentState);
+  };
+
+  const onSubmit = async (values: TitleFormSchemaType) => {
+    try {
+      await axios.patch(`api/courses/${courseId}`, values);
+      toast.success('Course title updated');
+      toggleIsEditing();
+      router.refresh();
+    } catch {
+      toast.error('Something went wrong');
+    }
   };
 
   return (
