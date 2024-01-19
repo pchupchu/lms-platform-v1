@@ -89,6 +89,11 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
                 </FormItem>
               )}
             />
+            <div className='flex items-center gap-x-2 '>
+              <Button type='submit' disabled={isSubmitting || !isValid}>
+                Save
+              </Button>
+            </div>
           </form>
         </Form>
       )}
