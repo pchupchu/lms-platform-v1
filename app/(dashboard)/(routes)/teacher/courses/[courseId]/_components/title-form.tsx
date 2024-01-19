@@ -25,7 +25,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     mode: 'onBlur',
     resolver: zodResolver(titleFormSchema),
     defaultValues: {
-      title: initialData.title,
+      title: initialData?.title,
     },
   });
 
@@ -59,6 +59,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           )}
         </Button>
       </div>
+      {!isEditing && <p className='mt-2 text-sm'>{initialData.title}</p>}
     </div>
   );
 };
