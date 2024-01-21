@@ -1,7 +1,14 @@
 import { auth } from '@clerk/nextjs';
 import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/lib/db';
 
-export async function PATCH(request: NextRequest) {
+interface ContextProps {
+  params: {
+    courseId: string;
+  };
+}
+
+export async function PATCH(request: NextRequest, { params }: ContextProps) {
   try {
     const { userId } = auth();
     const values = await request.json();
@@ -9,6 +16,14 @@ export async function PATCH(request: NextRequest) {
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
+
+    await db.course.update({
+      where: {
+        id: params.courseId,
+        userId,
+      },
+      data: { ...values },
+    });
   } catch (error) {
     console.log('[COURSE_ID]', error);
     return new NextResponse('Internal Error', { status: 500 });
