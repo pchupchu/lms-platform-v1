@@ -18,28 +18,28 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
-interface TitleFormProps {
+interface DescriptionFormProps {
   initialData: {
-    title: string;
+    description: string | null;
   };
   courseId: string;
 }
 
-const titleFormSchema = z.object({
-  title: z.string().trim().min(1, 'Title is required'),
+const descriptionFormSchema = z.object({
+  description: z.string().trim().min(1, 'Description is required'),
 });
 
-type TitleFormSchemaType = z.infer<typeof titleFormSchema>;
+type DescriptionFormSchemaType = z.infer<typeof descriptionFormSchema>;
 
-const DescriptionForm = ({ initialData, courseId }: TitleFormProps) => {
+const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
-  const form = useForm<TitleFormSchemaType>({
+  const form = useForm<DescriptionFormSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(titleFormSchema),
+    resolver: zodResolver(descriptionFormSchema),
     defaultValues: {
-      title: initialData?.title,
+      description: initialData?.description ?? '',
     },
   });
 
@@ -49,7 +49,7 @@ const DescriptionForm = ({ initialData, courseId }: TitleFormProps) => {
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: TitleFormSchemaType) => {
+  const onSubmit = async (values: DescriptionFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course title updated');
@@ -66,7 +66,7 @@ const DescriptionForm = ({ initialData, courseId }: TitleFormProps) => {
         {/* 
         WARN: Почему заголовок не в текстовом теге
         */}
-        Course Title
+        Course Description
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing ? (
             'Cancel'
@@ -78,7 +78,7 @@ const DescriptionForm = ({ initialData, courseId }: TitleFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && <p className='mt-2 text-sm'>{initialData.title}</p>}
+      {!isEditing && <p className='mt-2 text-sm'>{initialData.description}</p>}
       {isEditing && (
         <Form {...form}>
           <form
@@ -86,7 +86,7 @@ const DescriptionForm = ({ initialData, courseId }: TitleFormProps) => {
             onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name='title'
+              name='description'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
