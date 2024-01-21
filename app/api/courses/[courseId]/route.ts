@@ -17,13 +17,15 @@ export async function PATCH(request: NextRequest, { params }: ContextProps) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    await db.course.update({
+    const course = await db.course.update({
       where: {
         id: params.courseId,
         userId,
       },
       data: { ...values },
     });
+
+    return NextResponse.json(course);
   } catch (error) {
     console.log('[COURSE_ID]', error);
     return new NextResponse('Internal Error', { status: 500 });
