@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { cn } from '@/lib/utils';
 
 interface DescriptionFormProps {
   initialData: {
@@ -78,7 +79,15 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && <p className='mt-2 text-sm'>{initialData.description}</p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            'mt-2 text-sm',
+            !initialData.description && 'italic text-slate-500',
+          )}>
+          {initialData.description ?? 'No description'}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
