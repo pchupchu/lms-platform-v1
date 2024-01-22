@@ -52,7 +52,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const onSubmit = async (values: TitleFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success('Course title updated');
+      toast.success('Course updated');
       toggleIsEditing();
       router.refresh();
     } catch {

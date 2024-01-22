@@ -13,11 +13,11 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
+import { Textarea } from '@/components/ui/textarea';
 
 interface DescriptionFormProps {
   initialData: {
@@ -53,7 +53,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const onSubmit = async (values: DescriptionFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success('Course title updated');
+      toast.success('Course updated');
       toggleIsEditing();
       router.refresh();
     } catch {
@@ -99,9 +99,9 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       {...field}
-                      placeholder='e.g. "Advanced web development"'
+                      placeholder='e.g. "This course is about..."'
                       disabled={isSubmitting}
                     />
                   </FormControl>
