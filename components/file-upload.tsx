@@ -15,7 +15,7 @@ const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
         // Do something with the response
-        console.log('[RESPONSE_FROM_UPLOADTHING]', res);
+        // console.log('[RESPONSE_FROM_UPLOADTHING]', res);
         onChange(res[0].url);
         toast.success('Upload Completed');
       }}
