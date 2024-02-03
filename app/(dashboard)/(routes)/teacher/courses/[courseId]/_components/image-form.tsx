@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import Image from 'next/image';
 
 interface ImageFormProps {
   initialData: {
@@ -59,6 +60,16 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       {!isEditing && !initialData.imageUrl && (
         <div className='flex h-60 items-center justify-center rounded-md bg-slate-200'>
           <ImageIcon className='h-10 w-10 text-slate-500' />
+        </div>
+      )}
+      {!isEditing && initialData.imageUrl && (
+        <div className='relative mt-2 aspect-video'>
+          <Image
+            className='object-cover'
+            src='https://wallpapers.com/images/featured-full/lil-uzi-vert-uwc8hevgth91tcnc.jpg'
+            alt='Course image'
+            fill
+          />
         </div>
       )}
       {isEditing && <></>}
