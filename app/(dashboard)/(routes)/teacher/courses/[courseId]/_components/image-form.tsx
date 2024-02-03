@@ -1,56 +1,28 @@
 'use client';
 
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { PencilIcon } from 'lucide-react';
 import { useState } from 'react';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { cn } from '@/lib/utils';
-import { Textarea } from '@/components/ui/textarea';
 
-interface DescriptionFormProps {
+interface ImageFormProps {
   initialData: {
-    description: string | null;
+    imageUrl: string | null;
   };
   courseId: string;
 }
 
-const descriptionFormSchema = z.object({
-  description: z.string().trim().min(1, 'Description is required'),
-});
-
-type DescriptionFormSchemaType = z.infer<typeof descriptionFormSchema>;
-
-const ImageForm = ({ initialData, courseId }: DescriptionFormProps) => {
+const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
-
-  const form = useForm<DescriptionFormSchemaType>({
-    mode: 'onBlur',
-    resolver: zodResolver(descriptionFormSchema),
-    defaultValues: {
-      description: initialData?.description ?? '',
-    },
-  });
-
-  const { isValid, isSubmitting } = form.formState;
 
   const toggleIsEditing = () => {
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: DescriptionFormSchemaType) => {
+  const onSubmit = async (values: { imageUrl: string }) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course updated');
@@ -67,7 +39,7 @@ const ImageForm = ({ initialData, courseId }: DescriptionFormProps) => {
         {/* 
         WARN: Почему заголовок не в текстовом теге
         */}
-        Course Description
+        Course Image
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing ? (
             'Cancel'
@@ -79,44 +51,8 @@ const ImageForm = ({ initialData, courseId }: DescriptionFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && (
-        <p
-          className={cn(
-            'mt-2 text-sm',
-            !initialData.description && 'italic text-slate-500',
-          )}>
-          {initialData.description ?? 'No description'}
-        </p>
-      )}
-      {isEditing && (
-        <Form {...form}>
-          <form
-            className='mt-4 space-y-4'
-            onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder='e.g. "This course is about..."'
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className='flex items-center gap-x-2 '>
-              <Button type='submit' disabled={isSubmitting || !isValid}>
-                Save
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
+      {!isEditing && <></>}
+      {isEditing && <></>}
     </div>
   );
 };
