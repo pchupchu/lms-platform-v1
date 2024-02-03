@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import Image from 'next/image';
+import FileUpload from '@/components/file-upload';
 
 interface ImageFormProps {
   initialData: {
@@ -31,6 +32,12 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       router.refresh();
     } catch {
       toast.error('Something went wrong');
+    }
+  };
+
+  const handleOnChange = (url?: string) => {
+    if (url) {
+      onSubmit({ imageUrl: url });
     }
   };
 
@@ -66,13 +73,20 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
         <div className='relative mt-2 aspect-video'>
           <Image
             className='object-cover'
-            src='https://wallpapers.com/images/featured-full/lil-uzi-vert-uwc8hevgth91tcnc.jpg'
+            src={initialData.imageUrl}
             alt='Course image'
             fill
           />
         </div>
       )}
-      {isEditing && <></>}
+      {isEditing && (
+        <>
+          <FileUpload endpoint='courseImage' onChange={handleOnChange} />
+          <p className='mt-4 text-center text-xs text-muted-foreground'>
+            16:9 aspect ratio is recommended
+          </p>
+        </>
+      )}
     </div>
   );
 };
