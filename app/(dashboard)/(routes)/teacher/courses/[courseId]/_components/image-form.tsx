@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { PencilIcon, PlusCircle } from 'lucide-react';
+import { ImageIcon, PencilIcon, PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -56,7 +56,11 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && <></>}
+      {!isEditing && !initialData.imageUrl && (
+        <div className='flex h-60 items-center justify-center rounded-md bg-slate-200'>
+          <ImageIcon className='h-10 w-10 text-slate-500' />
+        </div>
+      )}
       {isEditing && <></>}
     </div>
   );
