@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
+import Combobox from '@/components/ui/combobox';
 
 interface CategoryFormProps {
   initialData: {
@@ -109,7 +110,16 @@ const CategoryForm = ({
               name='categoryId'
               render={({ field }) => (
                 <FormItem>
-                  <FormControl></FormControl>
+                  <FormControl>
+                    <Combobox
+                      options={categories.map((category) => ({
+                        label: category.name,
+                        value: category.id,
+                      }))}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

@@ -24,10 +24,10 @@ interface ComboboxProps {
     value: string;
   }[];
   value: string;
-  onSetValue: (value: string) => void;
+  onChange: (value: string) => void;
 }
 
-const Combobox = ({ options, value, onSetValue }: ComboboxProps) => {
+const Combobox = ({ options, value, onChange }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -54,9 +54,8 @@ const Combobox = ({ options, value, onSetValue }: ComboboxProps) => {
                 key={option.value}
                 value={option.label}
                 onSelect={() => {
-                  onSetValue(value === option.value ? '' : option.value);
+                  onChange(value === option.value ? '' : option.value);
                   setOpen(false);
-                  console.log({ value: option.value });
                 }}>
                 <Check
                   className={cn(
