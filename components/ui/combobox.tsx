@@ -18,32 +18,17 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-const animals = [
-  {
-    value: '1',
-    label: 'Cat',
-  },
-  {
-    value: '2',
-    label: 'Dog',
-  },
-  {
-    value: '3',
-    label: 'Tiger',
-  },
-  {
-    value: '4',
-    label: 'Fox',
-  },
-  {
-    value: '5',
-    label: 'Rabbit',
-  },
-];
+interface ComboboxProps {
+  options: {
+    label: string;
+    value: string;
+  }[];
+  value: string;
+  onSetValue: (value: string) => void;
+}
 
-export function ComboboxDemo() {
+const Combobox = ({ options, value, onSetValue }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<string | undefined>('');
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -52,37 +37,34 @@ export function ComboboxDemo() {
           variant='outline'
           role='combobox'
           aria-expanded={open}
-          className='w-[200px] justify-between'>
+          className='w-full justify-between'>
           {value
-            ? animals.find((animal) => animal.value === value)?.label
-            : 'Select animal...'}
+            ? options.find((option) => option.value === value)?.label
+            : 'Select option...'}
           <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[200px] p-0'>
         <Command>
-          <CommandInput placeholder='Search animal...' />
-          <CommandEmpty>No animals found.</CommandEmpty>
+          <CommandInput placeholder='Search option...' />
+          <CommandEmpty>No options found.</CommandEmpty>
           <CommandGroup>
-            {animals.map((animal) => (
+            {options.map((option) => (
               <CommandItem
-                key={animal.value}
-                value={animal.label}
-                onSelect={(currentValue) => {
-                  const currentId = animals.find(
-                    (animal) => animal.label.toLowerCase() === currentValue,
-                  )?.value;
-                  setValue(value === currentId ? '' : currentId);
+                key={option.value}
+                value={option.label}
+                onSelect={() => {
+                  onSetValue(value === option.value ? '' : option.value);
                   setOpen(false);
-                  console.log({ currentValue, currentId });
+                  console.log({ value: option.value });
                 }}>
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    value === animal.value ? 'opacity-100' : 'opacity-0',
+                    value === option.value ? 'opacity-100' : 'opacity-0',
                   )}
                 />
-                {animal.label}
+                {option.label}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -90,4 +72,6 @@ export function ComboboxDemo() {
       </PopoverContent>
     </Popover>
   );
-}
+};
+
+export default Combobox;
