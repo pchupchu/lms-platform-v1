@@ -17,7 +17,6 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
-import { Textarea } from '@/components/ui/textarea';
 
 interface CategoryFormProps {
   initialData: {
@@ -30,11 +29,11 @@ interface CategoryFormProps {
   }[];
 }
 
-const descriptionFormSchema = z.object({
-  description: z.string().trim().min(1, 'Description is required'),
+const categoryFormSchema = z.object({
+  categoryId: z.string().trim().min(1, 'Category is required'),
 });
 
-type DescriptionFormSchemaType = z.infer<typeof descriptionFormSchema>;
+type CategoryFormSchemaType = z.infer<typeof categoryFormSchema>;
 
 const CategoryForm = ({
   initialData,
@@ -44,11 +43,11 @@ const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
-  const form = useForm<DescriptionFormSchemaType>({
+  const form = useForm<CategoryFormSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(descriptionFormSchema),
+    resolver: zodResolver(categoryFormSchema),
     defaultValues: {
-      description: initialData?.description ?? '',
+      categoryId: initialData?.categoryId ?? '',
     },
   });
 
@@ -58,7 +57,7 @@ const CategoryForm = ({
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: DescriptionFormSchemaType) => {
+  const onSubmit = async (values: CategoryFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course updated');
@@ -69,13 +68,17 @@ const CategoryForm = ({
     }
   };
 
+  const selectedCategory = categories.find(
+    (category) => category.id === initialData.categoryId,
+  )?.name;
+
   return (
     <div className='mt-6 rounded-md border bg-slate-100 p-4'>
       <div className='flex items-center justify-between font-medium'>
         {/* 
         WARN: Почему заголовок не в текстовом теге
         */}
-        Course Description
+        Course Category
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing ? (
             'Cancel'
@@ -91,9 +94,9 @@ const CategoryForm = ({
         <p
           className={cn(
             'mt-2 text-sm',
-            !initialData.description && 'italic text-slate-500',
+            !initialData.categoryId && 'italic text-slate-500',
           )}>
-          {initialData.description ?? 'No description'}
+          {selectedCategory ?? 'No category'}
         </p>
       )}
       {isEditing && (
@@ -103,16 +106,10 @@ const CategoryForm = ({
             onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name='description'
+              name='categoryId'
               render={({ field }) => (
                 <FormItem>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder='e.g. "This course is about..."'
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
+                  <FormControl></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
