@@ -36,8 +36,8 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
   ];
 
   const totalFields = requredFields.length;
-  const completedFields = requredFields.filter((requredField) =>
-    Boolean(requredField),
+  const completedFields = requredFields.filter(
+    (requredField) => Boolean(requredField) || requredField === 0,
   ).length;
   const completionText = `(${completedFields}/${totalFields})`;
 
