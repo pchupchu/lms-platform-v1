@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import { formatPrice } from '@/lib/format';
 
 interface PriceFormProps {
   initialData: {
@@ -90,7 +91,9 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
             'mt-2 text-sm',
             initialData.price ?? 'italic text-slate-500',
           )}>
-          {initialData.price ?? 'No price'}
+          {initialData.price !== null
+            ? formatPrice(initialData.price)
+            : 'No price'}
         </p>
       )}
       {isEditing && (
