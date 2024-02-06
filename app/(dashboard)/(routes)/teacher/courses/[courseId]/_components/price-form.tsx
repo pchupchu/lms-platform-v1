@@ -31,7 +31,7 @@ const priceFormSchema = z.object({
   price: z.preprocess(
     (a) => parseFloat(a as string),
     z
-      .number({ invalid_type_error: 'NaN is returned' })
+      .number({ invalid_type_error: 'Number is required' })
       .nonnegative('Number must be equal or greater then 0'),
   ),
 });
