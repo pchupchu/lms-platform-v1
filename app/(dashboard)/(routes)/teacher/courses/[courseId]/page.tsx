@@ -13,6 +13,7 @@ import DescriptionForm from './_components/description-form';
 import ImageForm from './_components/image-form';
 import CategoryForm from './_components/category-form';
 import PriceForm from './_components/price-form';
+import AttachmentForm from './_components/attachment-form';
 
 interface CourseIdProps {
   params: {
@@ -98,6 +99,7 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
             <div className='flex items-center gap-x-2'>
               <IconBadge icon={File} />
               <h2 className='text-xl'>Resources & attachments</h2>
+              <AttachmentForm initialData={course} courseId={course.id} />
             </div>
           </div>
           {/* Section "Resources & attachments" ends */}
