@@ -1,7 +1,12 @@
 import IconBadge from '@/components/icon-badge';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
-import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react';
+import {
+  CircleDollarSign,
+  File,
+  LayoutDashboard,
+  ListChecks,
+} from 'lucide-react';
 import { redirect } from 'next/navigation';
 import TitleForm from './_components/title-form';
 import DescriptionForm from './_components/description-form';
@@ -87,6 +92,15 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
             <PriceForm initialData={course} courseId={course.id} />
           </div>
           {/* Section "Sell your course" ends */}
+
+          {/* Section "Resources & attachments" starts */}
+          <div>
+            <div className='flex items-center gap-x-2'>
+              <IconBadge icon={File} />
+              <h2 className='text-xl'>Resources & attachments</h2>
+            </div>
+          </div>
+          {/* Section "Resources & attachments" ends */}
         </div>
       </div>
     </div>
