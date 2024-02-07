@@ -25,7 +25,10 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
   const { courseId } = params;
   const { userId } = auth();
 
-  const course = await db.course.findUnique({ where: { id: courseId } });
+  const course = await db.course.findUnique({
+    where: { id: courseId },
+    include: { attachments: { orderBy: { createdAt: 'desc' } } },
+  });
 
   if (!course || course.userId !== userId) {
     return redirect('/');
