@@ -1,12 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ImageIcon, PencilIcon, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import Image from 'next/image';
 import FileUpload from '@/components/file-upload';
 import { Attachment, Course } from '@prisma/client';
 
@@ -23,7 +22,7 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: { imageUrl: string }) => {
+  const onSubmit = async (values: { url: string }) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course updated');
@@ -34,10 +33,8 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
     }
   };
 
-  const handleOnChange = (url?: string) => {
-    if (url) {
-      onSubmit({ imageUrl: url });
-    }
+  const handleOnChange = (url: string) => {
+    onSubmit({ url });
   };
 
   return (
@@ -46,43 +43,23 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
         {/* 
         WARN: Почему заголовок не в текстовом теге
         */}
-        Course Image
+        Course Attachments
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing && <>Cancel</>}
-          {!isEditing && initialData.imageUrl && (
-            <>
-              <PencilIcon className='mr-2 h-4 w-4' />
-              Edit
-            </>
-          )}
-          {!isEditing && !initialData.imageUrl && (
+          {!isEditing && (
             <>
               <PlusCircle className='mr-2 h-4 w-4' />
-              Add
+              Add a file
             </>
           )}
         </Button>
       </div>
-      {!isEditing && !initialData.imageUrl && (
-        <div className='flex h-60 items-center justify-center rounded-md bg-slate-200'>
-          <ImageIcon className='h-10 w-10 text-slate-500' />
-        </div>
-      )}
-      {!isEditing && initialData.imageUrl && (
-        <div className='relative mt-2 aspect-video'>
-          <Image
-            className='rounded-md object-cover'
-            src={initialData.imageUrl}
-            alt='Course image'
-            fill
-          />
-        </div>
-      )}
+
       {isEditing && (
         <>
-          <FileUpload endpoint='courseImage' onChange={handleOnChange} />
+          <FileUpload endpoint='courseAttachment' onChange={handleOnChange} />
           <p className='mt-4 text-center text-xs text-muted-foreground'>
-            16:9 aspect ratio is recommended
+            Add anything your students might need to complete the course.
           </p>
         </>
       )}

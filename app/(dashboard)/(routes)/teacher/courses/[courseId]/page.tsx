@@ -102,8 +102,8 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
             <div className='flex items-center gap-x-2'>
               <IconBadge icon={File} />
               <h2 className='text-xl'>Resources & attachments</h2>
-              <AttachmentForm initialData={course} courseId={course.id} />
             </div>
+            <AttachmentForm initialData={course} courseId={course.id} />
           </div>
           {/* Section "Resources & attachments" ends */}
         </div>
