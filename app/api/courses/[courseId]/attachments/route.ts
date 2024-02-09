@@ -28,6 +28,8 @@ export async function POST(request: NextRequest, { params }: ContextProps) {
     const attachment = db.attachment.create({
       data: { url, name: url.split('/').pop(), courseId: params.courseId },
     });
+
+    return NextResponse.json(attachment);
   } catch (error) {
     console.log('[ATTACHMENTS]', error);
     return new NextResponse('Internal Error', { status: 500 });
