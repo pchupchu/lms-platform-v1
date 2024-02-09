@@ -17,12 +17,17 @@ export async function POST(request: NextRequest, { params }: ContextProps) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const courseOwner = await db.course.findUnique({where: {id: params.courseId, userId}})
+    const courseOwner = await db.course.findUnique({
+      where: { id: params.courseId, userId },
+    });
 
     if (!courseOwner) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+    const attachment = db.attachment.create({
+      data: { url, name: url.split('/').pop(), courseId: params.courseId },
+    });
   } catch (error) {
     console.log('[ATTACHMENTS]', error);
     return new NextResponse('Internal Error', { status: 500 });
