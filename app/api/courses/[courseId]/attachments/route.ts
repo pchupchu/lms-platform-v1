@@ -25,7 +25,7 @@ export async function POST(request: NextRequest, { params }: ContextProps) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const attachment = db.attachment.create({
+    const attachment = await db.attachment.create({
       data: { url, name: url.split('/').pop(), courseId: params.courseId },
     });
 
