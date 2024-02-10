@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import FileUpload from '@/components/file-upload';
 import { Attachment, Course } from '@prisma/client';
+import { url } from 'inspector';
 
 interface AttachmentFormProps {
   initialData: Course & { attachments: Attachment[] };
@@ -32,6 +33,19 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
       router.refresh();
     } catch {
       toast.error('Something went wrong');
+    }
+  };
+
+  const onDelete = async (id: string) => {
+    try {
+      setDeletingId(id);
+      await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
+      toast.success('Attachment deleted');
+      router.refresh();
+    } catch {
+      toast.error('Something went wrong');
+    } finally {
+      setDeletingId('');
     }
   };
 
@@ -77,13 +91,15 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
               key={attachment.id}
               className='flex w-full items-center rounded-md border border-sky-200 bg-sky-100 p-3 text-sky-700'>
               <File className='mr-2 h-4 w-4 flex-shrink-0' />
-              <p className='line-clamp-1 text-xs'>{attachment.name}</p>
+              <p className='mr-2 line-clamp-1 text-xs'>{attachment.name}</p>
 
               {deletingId === attachment.id ? (
-                <Loader2 className='ml-2 h-4 w-4 animate-spin' />
+                <Loader2 className='ml-auto h-4 w-4 animate-spin' />
               ) : (
-                <button className='ml-auto transition hover:opacity-75'>
-                  <X className='ml-2 h-4 w-4' />
+                <button
+                  onClick={() => onDelete(attachment.id)}
+                  className='ml-auto transition hover:opacity-75'>
+                  <X className='h-4 w-4' />
                 </button>
               )}
             </div>
