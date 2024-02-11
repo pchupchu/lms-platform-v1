@@ -1,3 +1,4 @@
+import { utapi } from '@/app/api/uploadthing/route';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
 import { NextRequest, NextResponse } from 'next/server';
@@ -25,12 +26,14 @@ export async function DELETE(request: NextRequest, { params }: ContextProps) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const attachment = db.attachment.delete({
+    const attachment = await db.attachment.delete({
       where: {
         courseId: params.courseId,
         id: params.attachmentId,
       },
     });
+
+    await utapi.deleteFiles(attachment.name);
 
     return NextResponse.json(attachment);
   } catch (error) {
