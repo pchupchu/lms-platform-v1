@@ -80,11 +80,9 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
         </>
       )}
 
-      {!isEditing && initialData.attachments.length === 0 && (
+      {!isEditing && !initialData.attachments.length ? (
         <p className='mt-2 text-sm italic text-slate-500'>No attachments yet</p>
-      )}
-
-      {!isEditing && initialData.attachments.length > 0 && (
+      ) : (
         <div className='space-y-2'>
           {initialData.attachments.map((attachment) => (
             <div
