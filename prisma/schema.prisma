@@ -19,6 +19,7 @@ model Course {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   attachments Attachment[]
+  chapters    Chapter[]
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -43,4 +44,23 @@ model Category {
   name String @unique
 
   courses Course[]
+}
+
+model Chapter {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  videoUrl    String?  @db.Text
+  position    Int
+  isPublished Boolean  @default(false)
+  isFree      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  // TODO: удалить chapter без onDelete Cascade 
+
+  @@index([courseId])
 }
