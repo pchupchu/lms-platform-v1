@@ -40,7 +40,7 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
 
   const categories = await db.category.findMany({ orderBy: { name: 'asc' } });
 
-  const requredFields = [
+  const requiredFields = [
     course.title,
     course.description,
     course.imageUrl,
@@ -48,9 +48,9 @@ const CourseIdPage = async ({ params }: CourseIdProps) => {
     course.categoryId,
   ];
 
-  const totalFields = requredFields.length;
-  const completedFields = requredFields.filter((requredField) =>
-    Boolean(requredField),
+  const totalFields = requiredFields.length;
+  const completedFields = requiredFields.filter((requiredField) =>
+    Boolean(requiredField),
   ).length;
   const completionText = `(${completedFields}/${totalFields})`;
 
