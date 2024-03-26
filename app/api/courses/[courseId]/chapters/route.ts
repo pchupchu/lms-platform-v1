@@ -39,7 +39,9 @@ export async function POST(request: NextRequest, { params }: ContextProps) {
         courseId: params.courseId,
       },
     });
+    return NextResponse.json(chapter);
   } catch (error) {
     console.log('[CHAPTERS]', error);
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }
