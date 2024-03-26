@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Chapter, Course } from '@prisma/client';
 import { Input } from '@/components/ui/input';
+import ChaptersList from './chapters-list';
 
 interface ChaptersFormProps {
   initialData: Course & { chapters: Chapter[] };
@@ -32,6 +33,8 @@ type ChaptersFormSchemaType = z.infer<typeof chaptersFormSchema>;
 
 const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const router = useRouter();
 
   const form = useForm<ChaptersFormSchemaType>({
@@ -58,6 +61,16 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     } catch {
       toast.error('Something went wrong');
     }
+  };
+
+  const handleOnReorder = (
+    updatedOrder: { id: string; position: number }[],
+  ) => {
+    console.log(updatedOrder);
+  };
+
+  const handleOnEdit = (id: string) => {
+    console.log(id);
   };
 
   return (
@@ -115,10 +128,16 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
             <p className='mt-2 text-sm italic text-slate-500'>No chapters</p>
           )}
           {initialData.chapters.length !== 0 && (
-            <p className='mt-2 text-sm italic text-slate-500'>
-              Future Chapters List
-            </p>
+            <ChaptersList
+              items={initialData.chapters}
+              isUpdating={isUpdating}
+              onEdit={handleOnEdit}
+              onReorder={handleOnReorder}
+            />
           )}
+          <p className='mt-4 text-center text-xs text-muted-foreground'>
+            Drag and drop to reorder the chapters
+          </p>
         </>
       )}
     </div>
