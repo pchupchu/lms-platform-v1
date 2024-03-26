@@ -18,11 +18,10 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
+import { Chapter, Course } from '@prisma/client';
 
-interface DescriptionFormProps {
-  initialData: {
-    description: string | null;
-  };
+interface ChaptersFormProps {
+  initialData: Course & { chapters: Chapter[] };
   courseId: string;
 }
 
@@ -32,7 +31,7 @@ const descriptionFormSchema = z.object({
 
 type DescriptionFormSchemaType = z.infer<typeof descriptionFormSchema>;
 
-const ChaptersForm = ({ initialData, courseId }: DescriptionFormProps) => {
+const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
