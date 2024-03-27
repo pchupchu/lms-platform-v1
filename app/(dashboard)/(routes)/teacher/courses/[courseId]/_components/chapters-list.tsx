@@ -9,6 +9,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import SortableItem from './sortable-item';
 
 interface ChaptersListProps {
   items: Chapter[];
@@ -45,9 +46,16 @@ const ChaptersList = ({
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext
-        items={chapters}
-        strategy={verticalListSortingStrategy}></SortableContext>
+      <SortableContext items={chapters} strategy={verticalListSortingStrategy}>
+        {chapters.map((chapter) => (
+          <SortableItem
+            chapter={chapter}
+            key={chapter.id}
+            onEdit={onEdit}
+            isUpdating={isUpdating}
+          />
+        ))}
+      </SortableContext>
     </DndContext>
   );
 };
