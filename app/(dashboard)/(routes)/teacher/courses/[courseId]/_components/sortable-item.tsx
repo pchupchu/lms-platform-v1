@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Chapter } from '@prisma/client';
+import { Grip } from 'lucide-react';
 
 interface SortableItemProps {
   chapter: Chapter;
@@ -29,6 +30,12 @@ const SortableItem = ({ chapter, isUpdating, onEdit }: SortableItemProps) => {
           'mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700',
           isPublished && 'border-sky-200 bg-sky-100 text-sky-700',
         )}>
+        <div
+          {...attributes}
+          {...listeners}
+          className='rounded-l-md px-2 py-3 transition'>
+          <Grip className='h-5 w-5' />
+        </div>
         {title}
       </div>
     </div>
