@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Chapter } from '@prisma/client';
@@ -21,7 +22,17 @@ const SortableItem = ({ chapter, isUpdating, onEdit }: SortableItemProps) => {
     transition,
   };
 
-  return <div ref={setNodeRef} style={style}></div>;
+  return (
+    <div ref={setNodeRef} style={style}>
+      <div
+        className={cn(
+          'mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700',
+          isPublished && 'border-sky-200 bg-sky-100 text-sky-700',
+        )}>
+        {title}
+      </div>
+    </div>
+  );
 };
 
 export default SortableItem;
