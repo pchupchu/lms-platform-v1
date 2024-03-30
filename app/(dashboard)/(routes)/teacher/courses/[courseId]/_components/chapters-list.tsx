@@ -43,6 +43,8 @@ const ChaptersList = ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
+    let updatedOrder: { id: string; position: number }[] | undefined;
+
     if (over && active.id !== over.id) {
       setChapters((prevChapters) => {
         const oldIndex = prevChapters.findIndex(
@@ -53,8 +55,17 @@ const ChaptersList = ({
         );
         const updatedChapters = arrayMove(prevChapters, oldIndex, newIndex);
 
+        updatedOrder = updatedChapters.map((chapter, index) => ({
+          id: chapter.id,
+          position: ++index,
+        }));
+
         return updatedChapters;
       });
+
+      if (updatedOrder) {
+        onReorder(updatedOrder);
+      }
     }
   };
 
