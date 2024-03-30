@@ -31,6 +31,7 @@ export async function PATCH(request: NextRequest, { params }: ContextProps) {
         data: { position: item.position },
       });
     }
+    return new NextResponse('Success', { status: 200 });
   } catch (error) {
     console.log('[REORDER]', error);
     return new NextResponse('Internal Error', { status: 500 });
