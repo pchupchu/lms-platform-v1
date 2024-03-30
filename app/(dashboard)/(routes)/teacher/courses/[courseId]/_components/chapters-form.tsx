@@ -82,7 +82,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   };
 
   const handleOnEdit = (id: string) => {
-    console.log(id);
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
   };
 
   return (
