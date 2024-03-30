@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import { PlusCircle } from 'lucide-react';
+import { Loader2, PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import {
   Form,
@@ -86,7 +86,13 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   };
 
   return (
-    <div className='mt-6 rounded-md border bg-slate-100 p-4'>
+    <div className='relative mt-6 rounded-md border bg-slate-100 p-4'>
+      {isUpdating && (
+        <div className='absolute inset-0 flex items-center justify-center rounded-md bg-slate-500/20'>
+          <Loader2 className='h-6 w-6 animate-spin text-sky-700' />
+        </div>
+      )}
+
       <div className='flex items-center justify-between font-medium'>
         {/* 
         WARN: Почему заголовок не в текстовом теге
