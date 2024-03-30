@@ -24,6 +24,13 @@ export async function PATCH(request: NextRequest, { params }: ContextProps) {
     if (!courseOwner) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
+
+    for (let item of list) {
+      await db.chapter.update({
+        where: { id: item.id },
+        data: { position: item.position },
+      });
+    }
   } catch (error) {
     console.log('[REORDER]', error);
     return new NextResponse('Internal Error', { status: 500 });
