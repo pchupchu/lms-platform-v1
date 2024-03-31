@@ -34,7 +34,10 @@ const SortableItem = ({ chapter, isUpdating, onEdit }: SortableItemProps) => {
         <div
           {...attributes}
           {...listeners}
-          className='rounded-l-md px-2 py-3 transition'>
+          className={cn(
+            'rounded-l-md px-2 py-3 transition active:bg-slate-300',
+            isPublished && 'active:bg-sky-200',
+          )}>
           <Grip className='h-5 w-5' />
         </div>
         {title}
