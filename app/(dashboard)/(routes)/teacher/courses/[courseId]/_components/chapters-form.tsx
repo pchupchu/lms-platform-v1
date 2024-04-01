@@ -123,7 +123,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder='e.g. Introduction to the course'
+                      placeholder='e.g. "Introduction to the course"'
                       disabled={isSubmitting}
                     />
                   </FormControl>
