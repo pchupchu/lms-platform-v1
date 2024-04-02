@@ -142,10 +142,9 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
       {!isCreating && (
         <>
-          {initialData.chapters.length === 0 && (
+          {!initialData.chapters.length ? (
             <p className='mt-2 text-sm italic text-slate-500'>No chapters</p>
-          )}
-          {initialData.chapters.length !== 0 && (
+          ) : (
             <ChaptersList
               items={initialData.chapters}
               isUpdating={isUpdating}
