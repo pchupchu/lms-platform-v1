@@ -1,5 +1,7 @@
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 interface ChapterIdPageProps {
@@ -39,7 +41,16 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
 
   const completionText = `(${completedFields}/${totalFields})`;
 
-  return <div>{chapterId}</div>;
+  return (
+    <div className='flex flex-col p-6'>
+      <Link
+        className='mb-6 flex items-center gap-2 text-sm transition hover:opacity-75'
+        href={`/teacher/courses/${params.courseId}`}>
+        <ArrowLeft className='h-4 w-4 flex-shrink-0' />
+        Back to course setup
+      </Link>
+    </div>
+  );
 };
 
 export default ChapterIdPage;
