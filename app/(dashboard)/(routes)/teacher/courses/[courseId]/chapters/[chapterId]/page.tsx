@@ -25,6 +25,10 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
     },
   });
 
+  if (!chapter || chapter.course.userId !== userId) {
+    return redirect('/');
+  }
+
   return <div>{chapterId}</div>;
 };
 
