@@ -31,6 +31,14 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
 
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
 
+  const totalFields = requiredFields.length;
+
+  const completedFields = requiredFields.filter((requiredFields) =>
+    Boolean(requiredFields),
+  ).length;
+
+  const completionText = `(${completedFields}/${totalFields})`;
+
   return <div>{chapterId}</div>;
 };
 
