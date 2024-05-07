@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs';
 import { ArrowLeft, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import ChapterTitleForm from './_components/chapter-title-form';
 
 interface ChapterIdPageProps {
   params: {
@@ -64,6 +65,11 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
               <IconBadge icon={LayoutDashboard} />
               <h2 className='text-xl'>Customize your chapter</h2>
             </div>
+            <ChapterTitleForm
+              initialData={chapter}
+              courseId={courseId}
+              chapterId={chapterId}
+            />
           </div>
           {/* Section `Customize your chapter` ends */}
         </div>
