@@ -32,7 +32,11 @@ const titleFormSchema = z.object({
 
 type TitleFormSchemaType = z.infer<typeof titleFormSchema>;
 
-const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
+const ChapterTitleForm = ({
+  initialData,
+  courseId,
+  chapterId,
+}: ChapterTitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
@@ -52,8 +56,11 @@ const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
 
   const onSubmit = async (values: TitleFormSchemaType) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success('Course updated');
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values,
+      );
+      toast.success('Chapter is updated');
       toggleIsEditing();
       router.refresh();
     } catch {
@@ -67,7 +74,7 @@ const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
         {/* 
         WARN: Почему заголовок не в текстовом теге
         */}
-        Course Title
+        Chapter Title
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing ? (
             'Cancel'
@@ -93,7 +100,7 @@ const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder='e.g. "Advanced web development"'
+                      placeholder='e.g. "Introduction to the course"'
                       disabled={isSubmitting}
                     />
                   </FormControl>
