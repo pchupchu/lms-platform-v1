@@ -32,6 +32,8 @@ export async function PATCH(request: NextRequest, { params }: ContextProps) {
       },
       data: { ...values },
     });
+
+    return NextResponse.json(chapter);
   } catch (error) {
     console.log('[CHAPTER_ID]', error);
     return new NextResponse('Internal Error', { status: 500 });
