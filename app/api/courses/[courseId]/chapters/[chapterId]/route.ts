@@ -24,6 +24,14 @@ export async function PATCH(request: NextRequest, { params }: ContextProps) {
     if (!courseOwner) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
+
+    const chapter = await db.chapter.update({
+      where: {
+        id: params.chapterId,
+        courseId: params.courseId,
+      },
+      data: { ...values },
+    });
   } catch (error) {
     console.log('[CHAPTER_ID]', error);
     return new NextResponse('Internal Error', { status: 500 });
