@@ -6,6 +6,17 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import { Underline } from '@tiptap/extension-underline';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import { lowlight } from 'lowlight';
+import css from 'highlight.js/lib/languages/css';
+import js from 'highlight.js/lib/languages/javascript';
+import ts from 'highlight.js/lib/languages/typescript';
+import html from 'highlight.js/lib/languages/xml';
+
+lowlight.registerLanguage('html', html);
+lowlight.registerLanguage('css', css);
+lowlight.registerLanguage('js', js);
+lowlight.registerLanguage('ts', ts);
 
 interface EditorProps {
   value: string;
@@ -40,6 +51,12 @@ const Editor = ({ value, onChange }: EditorProps) => {
         },
       }),
       Underline,
+      CodeBlockLowlight.configure({
+        lowlight,
+        HTMLAttributes: {
+          class: 'bg-[#0d0d0d;] font-mono px-3 py-4 rounded-lg text-white',
+        },
+      }),
     ],
     content: value,
     editorProps: {
