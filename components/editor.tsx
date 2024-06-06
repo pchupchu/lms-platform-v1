@@ -10,7 +10,21 @@ interface EditorProps {
 
 const Editor = ({ value, onChange }: EditorProps) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit.configure({
+        heading: {
+          levels: [2],
+          HTMLAttributes: {
+            class: 'text-xl font-semibold',
+          },
+        },
+        blockquote: {
+          HTMLAttributes: {
+            class: 'p-4 my-4 border-l-4 border-gray-300 bg-gray-50',
+          },
+        },
+      }),
+    ],
     content: value,
     editorProps: {
       attributes: {
