@@ -1,5 +1,8 @@
 'use client';
 
+import BulletList from '@tiptap/extension-bullet-list';
+import ListItem from '@tiptap/extension-list-item';
+import OrderedList from '@tiptap/extension-ordered-list';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -22,6 +25,17 @@ const Editor = ({ value, onChange }: EditorProps) => {
           HTMLAttributes: {
             class: 'p-4 my-4 border-l-4 border-gray-300 bg-gray-50',
           },
+        },
+      }),
+      ListItem,
+      BulletList.configure({
+        HTMLAttributes: {
+          class: 'pl-4 list-disc',
+        },
+      }),
+      OrderedList.configure({
+        HTMLAttributes: {
+          class: 'pl-4 list-decimal',
         },
       }),
     ],
