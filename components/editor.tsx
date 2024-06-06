@@ -3,6 +3,7 @@
 import BulletList from '@tiptap/extension-bullet-list';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
+import { Underline } from '@tiptap/extension-underline';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -38,6 +39,7 @@ const Editor = ({ value, onChange }: EditorProps) => {
           class: 'pl-4 list-decimal',
         },
       }),
+      Underline,
     ],
     content: value,
     editorProps: {
