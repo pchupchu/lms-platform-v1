@@ -16,36 +16,36 @@ import {
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import Editor from '@/components/editor';
-import Preview from '@/components/preview';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 
-interface ChapterDescriptionFormProps {
+interface ChapterAccessFormProps {
   initialData: {
-    description: string | null;
+    isFree: boolean;
   };
   courseId: string;
   chapterId: string;
 }
 
-const descriptionFormSchema = z.object({
-  description: z.string().trim().min(1, 'Description is required'),
+const accessFormSchema = z.object({
+  isFree: z.boolean().default(false),
 });
 
-type DescriptionFormSchemaType = z.infer<typeof descriptionFormSchema>;
+type AccesFormSchemaType = z.infer<typeof accessFormSchema>;
 
 const ChapterAccessForm = ({
   initialData,
   courseId,
   chapterId,
-}: ChapterDescriptionFormProps) => {
+}: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
-  const form = useForm<DescriptionFormSchemaType>({
+  const form = useForm<AccesFormSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(descriptionFormSchema),
+    resolver: zodResolver(accessFormSchema),
     defaultValues: {
-      description: initialData?.description ?? '',
+      isFree: initialData.isFree,
     },
   });
 
@@ -55,7 +55,7 @@ const ChapterAccessForm = ({
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: DescriptionFormSchemaType) => {
+  const onSubmit = async (values: AccesFormSchemaType) => {
     try {
       await axios.patch(
         `/api/courses/${courseId}/chapters/${chapterId}`,
@@ -72,7 +72,7 @@ const ChapterAccessForm = ({
   return (
     <div className='mt-6 rounded-md border bg-slate-100 p-4'>
       <div className='flex items-center justify-between font-medium'>
-        Chapter Description
+        Chapter access
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing ? (
             'Cancel'
@@ -87,11 +87,10 @@ const ChapterAccessForm = ({
 
       {!isEditing && (
         <div className='mt-2'>
-          {!initialData.description && (
-            <p className='text-sm italic text-slate-500'>No description</p>
-          )}
-          {initialData.description && (
-            <Preview value={initialData.description} />
+          {initialData.isFree ? (
+            <Badge className='bg-sky-700 uppercase'>free chapter</Badge>
+          ) : (
+            <Badge className='bg-slate-500 uppercase'>paid chapter</Badge>
           )}
         </div>
       )}
@@ -103,17 +102,29 @@ const ChapterAccessForm = ({
             onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name='description'
+              name='isFree'
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='flex items-center space-x-3 space-y-0 rounded-md border p-4'>
                   <FormControl>
-                    <Editor value={field.value} onChange={field.onChange} />
+                    <>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        disabled={isSubmitting}
+                        id='access-settings'
+                      />
+                      <label
+                        className='text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                        htmlFor='access-settings'>
+                        Check this box if you want to make this chapter free
+                      </label>
+                    </>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className='flex items-center gap-x-2 '>
+            <div className='flex items-center gap-x-2'>
               <Button type='submit' disabled={isSubmitting || !isValid}>
                 Save
               </Button>
