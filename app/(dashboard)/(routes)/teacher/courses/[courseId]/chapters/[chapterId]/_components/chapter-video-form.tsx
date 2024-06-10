@@ -8,15 +8,22 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import Image from 'next/image';
 import FileUpload from '@/components/file-upload';
+import { MuxData } from '@prisma/client';
 
-interface ImageFormProps {
+interface ChapterVideoFormProps {
   initialData: {
-    imageUrl: string | null;
+    videoUrl: string | null;
+    muxData: MuxData | null;
   };
   courseId: string;
+  chapterId: string;
 }
 
-const ChapterVideoForm = ({ initialData, courseId }: ImageFormProps) => {
+const ChapterVideoForm = ({
+  initialData,
+  courseId,
+  chapterId,
+}: ChapterVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
