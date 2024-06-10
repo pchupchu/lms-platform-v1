@@ -1,12 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ImageIcon, PencilIcon, PlusCircle } from 'lucide-react';
+import { PencilIcon, PlusCircle, Video } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import Image from 'next/image';
 import FileUpload from '@/components/file-upload';
 import { MuxData } from '@prisma/client';
 
@@ -31,10 +30,13 @@ const ChapterVideoForm = ({
     setIsEditing((currentState) => !currentState);
   };
 
-  const onSubmit = async (values: { imageUrl: string }) => {
+  const onSubmit = async (values: { videoUrl: string }) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success('Course updated');
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values,
+      );
+      toast.success('Chapter is updated');
       toggleIsEditing();
       router.refresh();
     } catch {
@@ -42,25 +44,25 @@ const ChapterVideoForm = ({
     }
   };
 
-  const handleOnChange = (url?: string) => {
+  const handleOnChange = (url: string) => {
     if (url) {
-      onSubmit({ imageUrl: url });
+      onSubmit({ videoUrl: url });
     }
   };
 
   return (
     <div className='mt-6 rounded-md border bg-slate-100 p-4'>
       <div className='flex items-center justify-between font-medium'>
-        Course Image
+        Chapter Video
         <Button variant={'ghost'} onClick={toggleIsEditing}>
           {isEditing && <>Cancel</>}
-          {!isEditing && initialData.imageUrl && (
+          {!isEditing && initialData.videoUrl && (
             <>
               <PencilIcon className='mr-2 h-4 w-4' />
               Edit
             </>
           )}
-          {!isEditing && !initialData.imageUrl && (
+          {!isEditing && !initialData.videoUrl && (
             <>
               <PlusCircle className='mr-2 h-4 w-4' />
               Add
@@ -68,26 +70,19 @@ const ChapterVideoForm = ({
           )}
         </Button>
       </div>
-      {!isEditing && !initialData.imageUrl && (
+      {!isEditing && !initialData.videoUrl && (
         <div className='flex h-60 items-center justify-center rounded-md bg-slate-200'>
-          <ImageIcon className='h-10 w-10 text-slate-500' />
+          <Video className='h-10 w-10 text-slate-500' />
         </div>
       )}
-      {!isEditing && initialData.imageUrl && (
-        <div className='relative mt-2 aspect-video'>
-          <Image
-            className='rounded-md object-cover'
-            src={initialData.imageUrl}
-            alt='Course image'
-            fill
-          />
-        </div>
+      {!isEditing && initialData.videoUrl && (
+        <div className='relative mt-2 aspect-video'></div>
       )}
       {isEditing && (
         <>
-          <FileUpload endpoint='courseImage' onChange={handleOnChange} />
+          <FileUpload endpoint='chapterVideo' onChange={handleOnChange} />
           <p className='mt-4 text-center text-xs text-muted-foreground'>
-            16:9 aspect ratio is recommended
+            Upload this chapter&apos;s video
           </p>
         </>
       )}
